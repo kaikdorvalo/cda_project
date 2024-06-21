@@ -1,3 +1,4 @@
 export enum TableEnum {
-    USER = 'user'
+    USER = 'user',
+    BADGE = 'badge'
 }

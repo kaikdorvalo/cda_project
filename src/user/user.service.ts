@@ -23,10 +23,7 @@ export class UserService {
     const salt = await bcrypt.genSalt(Number(process.env.BCRYPT_SALTS))
     createUserDto.password = await bcrypt.hash(createUserDto.password, salt);
 
-    const dateNow = new Date();
     createUserDto.active = true;
-    createUserDto.createdAt = dateNow;
-    createUserDto.updatedAt = dateNow;
 
     const newUser = this.userRepository.create(createUserDto);
     return await this.userRepository.save(newUser);

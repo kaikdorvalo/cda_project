@@ -1,5 +1,6 @@
 import { TableEnum } from "common/enums/tables.enum";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Badge } from "src/badge/entities/bagde.entity";
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: TableEnum.USER })
 export class User {
@@ -19,12 +20,16 @@ export class User {
     @Column()
     password: string
 
+    @ManyToMany(() => Badge, badge => badge.users)
+    @JoinTable()
+    badges: Badge[];
+
     @Column()
     active: boolean
 
-    @Column()
+    @CreateDateColumn()
     createdAt: Date
 
-    @Column()
+    @UpdateDateColumn()
     updatedAt: Date
 }
