@@ -1,5 +1,5 @@
 import { TableEnum } from "common/enums/tables.enum";
-import { User } from "src/user/entities/user.entity";
+import { UserBadge } from "../../user/entities/user-badge.entity";
 import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: TableEnum.BADGE })
@@ -17,8 +17,8 @@ export class Badge {
     @Column()
     image: string;
 
-    @ManyToMany(() => User, user => user.badges)
-    users: User[];
+    @ManyToMany(() => UserBadge, userBadge => userBadge.badge)
+    userBadges: UserBadge[];
 
     @Column()
     active: boolean

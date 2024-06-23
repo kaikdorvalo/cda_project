@@ -1,6 +1,7 @@
 import { TableEnum } from "common/enums/tables.enum";
-import { Badge } from "src/badge/entities/bagde.entity";
-import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { UserBadge } from "./user-badge.entity";
+import { BadgeCategory } from "src/badge-category/entities/badge-category.entity";
 
 @Entity({ name: TableEnum.USER })
 export class User {
@@ -20,9 +21,8 @@ export class User {
     @Column()
     password: string
 
-    @ManyToMany(() => Badge, badge => badge.users)
-    @JoinTable()
-    badges: Badge[];
+    @ManyToMany(() => UserBadge, userBadge => userBadge.user)
+    userBadges: UserBadge[];
 
     @Column()
     active: boolean
@@ -32,4 +32,7 @@ export class User {
 
     @UpdateDateColumn()
     updatedAt: Date
+
+    @OneToMany(() => BadgeCategory, badgeCategory => badgeCategory.id)
+    badgeCategory: BadgeCategory[];
 }

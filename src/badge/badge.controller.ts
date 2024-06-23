@@ -1,10 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters, UseGuards, Req, Res, HttpStatus } from '@nestjs/common';
 import { BadgeService } from './badge.service';
 import { CreateBadgeDto } from './dto/create-badge.dto';
 import { HttpExceptionFilter } from 'common/exception-filter/http-exception.filter';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { request } from 'http';
-import { Request } from 'express';
+import { Request, Response, response } from 'express';
 
 @Controller('badges')
 @UseFilters(HttpExceptionFilter)
@@ -23,7 +23,12 @@ export class BadgeController {
 
   @Get('random')
   @UseGuards(AuthGuard)
-  async getRandomBadge(@Req() request: any) {
-    return this.bagdeService.getRandomBadge(request.user.sub);
+  async getRandomBadgeNotOwnedByUser(@Req() request: any, @Res() response: Response) {
+    const result = await this.bagdeService.getRandomBadgeNotOwnedByUser(request.user.sub);
+    if (result === null) {
+      return response.status(HttpStatus.NOT_FOUND).send('Todos os emblemas já foram resgatados.');
+    } else {
+      return response.status(HttpStatus.OK).send(result);
+    }
   }
 }
