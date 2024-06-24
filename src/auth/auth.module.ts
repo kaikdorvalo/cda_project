@@ -11,7 +11,7 @@ import 'dotenv/config';
     JwtModule.register({
       global: true,
       secret: process.env.JWT_PASSWORD,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '1d' },
     }),
   ],
   providers: [AuthService],

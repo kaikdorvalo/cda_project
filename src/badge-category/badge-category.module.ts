@@ -7,7 +7,7 @@ import { UserModule } from 'src/user/user.module';
 import { userProviders } from 'src/user/user.providers';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, UserModule],
   controllers: [BadgeCategoryController],
   providers: [
     ...badgeCategoriesProviders,

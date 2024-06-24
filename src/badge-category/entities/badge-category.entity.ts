@@ -1,6 +1,8 @@
 import { TableEnum } from "common/enums/tables.enum";
+import { Badge } from "src/badge/entities/bagde.entity";
+import { UserBadge } from "src/user/entities/user-badge.entity";
 import { User } from "src/user/entities/user.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: TableEnum.BADGE_CATEGORY })
 export class BadgeCategory {
@@ -19,7 +21,10 @@ export class BadgeCategory {
     @Column()
     active: boolean;
 
-    @OneToOne(() => User, user => user.id)
+    @ManyToOne(() => User, user => user.id)
     @JoinColumn()
-    createdBy: User
+    createdBy: User;
+
+    @ManyToMany(() => Badge, badge => badge.badgeCategory)
+    badge: Badge[];
 }

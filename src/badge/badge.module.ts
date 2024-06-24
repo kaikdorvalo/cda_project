@@ -5,6 +5,7 @@ import { DatabaseModule } from 'src/database/database.module';
 import { badgeProviders } from './badge.providers';
 import { UserModule } from '../user/user.module';
 import { userProviders } from '../user/user.providers';
+import { badgeCategoriesProviders } from 'src/badge-category/badge-category.providers';
 
 @Module({
   imports: [DatabaseModule, UserModule],
@@ -12,6 +13,7 @@ import { userProviders } from '../user/user.providers';
   providers: [
     ...badgeProviders,
     ...userProviders,
+    ...badgeCategoriesProviders,
     BadgeService
   ],
 })

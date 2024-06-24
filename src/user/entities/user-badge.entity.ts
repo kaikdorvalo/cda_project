@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } f
 import { User } from "./user.entity";
 import { Badge } from "src/badge/entities/bagde.entity";
 import { TableEnum } from "common/enums/tables.enum";
+import { BadgeCategory } from "src/badge-category/entities/badge-category.entity";
 
 
 @Entity({ name: TableEnum.USER_BADGE })

@@ -32,7 +32,4 @@ export class User {
 
     @UpdateDateColumn()
     updatedAt: Date
-
-    @OneToMany(() => BadgeCategory, badgeCategory => badgeCategory.id)
-    badgeCategory: BadgeCategory[];
 }

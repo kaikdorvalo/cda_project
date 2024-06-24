@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { CreateBadgeCategoryDto } from './dto/create-badge-category.dto';
 import { BadgeCategory } from './entities/badge-category.entity';
 import { Repository } from 'typeorm';
@@ -32,10 +32,13 @@ export class BadgeCategoryService {
     return badge;
   }
 
-  async populateBadgeCategories() {
+  async populateBadgeCategories(userId: number) {
     let badgeCategoriesPromises = [];
+    console.log(userId)
     for (let badgeCategory of BadgeCategoryData) {
+      const user = await this.userRepository.findOneBy({ id: userId });
       const newBadgeCategory = this.badgeCategoriesRepository.create(badgeCategory);
+      newBadgeCategory.createdBy = user;
       newBadgeCategory.active = true;
       badgeCategoriesPromises.push(this.badgeCategoriesRepository.save(newBadgeCategory));
     }

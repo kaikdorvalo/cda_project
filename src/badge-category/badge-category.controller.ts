@@ -1,9 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Req, UseGuards } from '@nestjs/common';
 import { BadgeCategoryService } from './badge-category.service';
 import { CreateBadgeCategoryDto } from './dto/create-badge-category.dto';
-import { UpdateBadgeCategoryDto } from './dto/update-badge-category.dto';
-import { request } from 'http';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('badge-categories')
 export class BadgeCategoryController {
@@ -11,15 +10,23 @@ export class BadgeCategoryController {
 
   @Post('create')
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Create a new badge category' })
+  @ApiResponse({ status: 201, description: 'Emblema criado.' })
+  @ApiResponse({ status: 400, description: 'Emblema já está criado.' })
+  @ApiResponse({ status: 500, description: 'Erro interno.' })
   async create(@Body() createBadgeCategoryDto: CreateBadgeCategoryDto, @Req() request: any) {
     return await this.badgeCategoryService.create(createBadgeCategoryDto, request.user.sub);
   }
 
-
-  //adicionar o guard para puxar user na hora de popular
   @Get('populate')
   @UseGuards(AuthGuard)
-  async populateBadgeCategories() {
-    return await this.badgeCategoryService.populateBadgeCategories();
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Populate the database with categories' })
+  @ApiResponse({ status: 201, description: 'Banco populado.' })
+  @ApiResponse({ status: 400, description: 'Emblema já está criado.' })
+  @ApiResponse({ status: 500, description: 'Erro interno.' })
+  async populateBadgeCategories(@Req() request: any) {
+    return await this.badgeCategoryService.populateBadgeCategories(request.user.sub);
   }
 }
