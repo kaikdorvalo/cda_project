@@ -39,7 +39,13 @@ export class UserService {
     }
   }
 
-  async getUserBadges(userId: Partial<User>) {
-    return this.userBadgeRepository.find({ where: { user: userId } })
+  async getUserBadges(userId: number) {
+    const query = `
+      SELECT b.*
+      FROM user_badge ub
+      INNER JOIN badge b ON ub.badgeId = b.id
+      WHERE ub.userId = ?
+    `
+    return this.userBadgeRepository.query(query, [userId])
   }
 }

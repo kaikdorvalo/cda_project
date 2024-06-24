@@ -5,7 +5,7 @@ import { HttpExceptionFilter } from 'common/exception-filter/http-exception.filt
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { request } from 'http';
 import { Request, Response, response } from 'express';
-import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('badges')
 @UseFilters(HttpExceptionFilter)
@@ -14,6 +14,7 @@ export class BadgeController {
 
   @Post('create')
   @ApiBearerAuth()
+  @ApiTags('badge')
   @ApiOperation({ summary: 'Create a new Badge' })
   @ApiResponse({ status: 201, description: 'Emblema criado.' })
   @ApiResponse({ status: 409, description: 'O emblema já existe.' })
@@ -24,6 +25,7 @@ export class BadgeController {
 
   @Get('populate')
   @ApiBearerAuth()
+  @ApiTags('badge')
   @ApiOperation({ summary: 'Populate the database with badges' })
   @ApiResponse({ status: 201, description: 'Banco de dados populado.' })
   @ApiResponse({ status: 400, description: 'Emblema já existe.' })
@@ -36,6 +38,7 @@ export class BadgeController {
   @Get('random')
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
+  @ApiTags('badge')
   @ApiOperation({ summary: 'Redeem random badge' })
   @ApiResponse({ status: 200, description: 'Emblema resgatado.' })
   @ApiResponse({ status: 404, description: 'Todos os emblemas já foram resgatados' })
@@ -52,6 +55,7 @@ export class BadgeController {
   @Get('all')
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
+  @ApiTags('badge')
   @ApiOperation({ summary: 'Get all badges' })
   @ApiQuery({ name: 'name', required: false })
   @ApiResponse({ status: 200, description: 'Busca bem sucedida.' })
@@ -63,6 +67,7 @@ export class BadgeController {
 
   @Post('redeem/:slug')
   @ApiBearerAuth()
+  @ApiTags('badge')
   @ApiOperation({ summary: 'Redeen a badge by slug' })
   @ApiResponse({ status: 201, description: 'Emblema resgatado.' })
   @ApiResponse({ status: 404, description: 'Emblema não encontrado ou já resgatado.' })

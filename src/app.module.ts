@@ -1,6 +1,4 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module } from '@nestjs/common';;
 import { UserModule } from './user/user.module';
 import 'dotenv/config';
 import { DatabaseModule } from './database/database.module';
@@ -16,7 +14,7 @@ import { BadgeCategoryModule } from './badge-category/badge-category.module';
     BagdeModule,
     BadgeCategoryModule
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule { }

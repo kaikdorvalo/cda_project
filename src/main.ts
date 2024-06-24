@@ -19,5 +19,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new ErrorExceptionFilter());
   await app.listen(3000);
+
+  //melhorar o get de emblemas do usuário para puxar os emblemas e não o id da cluna de user badges
 }
 bootstrap();
